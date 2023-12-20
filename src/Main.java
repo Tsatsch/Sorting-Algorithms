@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         int [] arr = new int[]{45,7,1,-12,6,0,45,72,12,3,1};
-        heapSort(arr);
+        bubbleSortRec(arr, arr.length);
         System.out.println(Arrays.toString(arr));
 
     }
@@ -164,6 +164,36 @@ public class Main {
         }
     }
 
+    // ref: https://www.geeksforgeeks.org/recursive-bubble-sort/
+    public static void bubbleSortRec(int[] arr, int n) {
+        // Base case
+        if (n == 1)
+            return;
+
+        int count = 0;
+        // One pass of bubble sort. After
+        // this pass, the largest element
+        // is moved (or bubbled) to end.
+        for (int i=0; i<n-1; i++)
+            if (arr[i] > arr[i+1])
+            {
+                // swap arr[i], arr[i+1]
+                int temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+                count = count+1;
+            }
+
+        // Check if any recursion happens or not
+        // If any recursion is not happen then return
+        if (count == 0)
+            return;
+
+        // Largest element is fixed,
+        // recur for remaining array
+        bubbleSortRec(arr, n-1);
+    }
+
     /* Insert Sort */
     // ref: https://www.geeksforgeeks.org/insertion-sort/
 
@@ -183,6 +213,31 @@ public class Main {
             }
             arr[j + 1] = key;
         }
+    }
+
+    // ref: https://www.geeksforgeeks.org/recursive-insertion-sort/
+    public static void insertionSortRecursive(int[] arr, int n) {
+        // Base case
+        if (n <= 1)
+            return;
+
+        // Sort first n-1 elements
+        insertionSortRecursive( arr, n-1 );
+
+        // Insert last element at its correct position
+        // in sorted array.
+        int last = arr[n-1];
+        int j = n-2;
+
+        /* Move elements of arr[0..i-1], that are
+          greater than key, to one position ahead
+          of their current position */
+        while (j >= 0 && arr[j] > last)
+        {
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = last;
     }
 
     /* Selection Sort */
